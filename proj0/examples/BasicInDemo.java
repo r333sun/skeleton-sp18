@@ -1,3 +1,4 @@
+
 /** Simpler demo of the In class. */
 public class BasicInDemo {
 	public static void main(String[] args) {
