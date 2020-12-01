@@ -118,7 +118,8 @@ public class IntList {
             B = new IntList(A.first,B);
             A = A.rest;
         }
-        return B;
+        A=B;
+        return A;
     }
 
 
