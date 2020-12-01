@@ -112,14 +112,14 @@ public class IntList {
     }
 
 
-    public static IntList reverse(IntList A){
-        IntList B = null;
-        while(A!= null){
-            B = new IntList(A.first,B);
-            A = A.rest;
+    public static IntList reverse(IntList A) {
+        if (A == null || A.rest == null) {
+            return A;
         }
-        A=B;
-        return A;
+        IntList toReturn = reverse(A.rest);
+        A.rest.rest = A;
+        A.rest = null;
+        return toReturn;
     }
 
 
