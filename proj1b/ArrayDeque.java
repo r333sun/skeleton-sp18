@@ -1,10 +1,8 @@
-import java.util.Objects;
-
 /**
  * @author
  * @create 2020-11-26 21:52
  */
-public class ArrayDeque<T> {
+public class ArrayDeque<T> implements Deque<T>{
 
     private static final double FACTOR = 0.25;
     private int size;
@@ -108,19 +106,5 @@ public class ArrayDeque<T> {
         return index+1;
     }
 
-    public static void main(String[] args) {
-        ArrayDeque<Integer> deque = new ArrayDeque<>();
-        for (int i = 0; i < 100; i++) {
-            deque.addLast(i);
-            deque.printDeque();
-            System.out.println();
-        }
-        System.out.println("--------------------");
-        for (int i = 0; i < 100; i++) {
-            deque.removeFirst();
-            deque.printDeque();
-            System.out.println();
-        }
-    }
 
 }
