@@ -8,6 +8,7 @@ public class GuitarHeroLite {
         synthesizer.GuitarString stringA = new synthesizer.GuitarString(CONCERT_A);
         synthesizer.GuitarString stringC = new synthesizer.GuitarString(CONCERT_C);
 
+
         while (true) {
 
             /* check if the user has typed a key; if so, process it */
