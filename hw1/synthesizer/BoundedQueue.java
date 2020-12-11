@@ -1,6 +1,5 @@
 package synthesizer;
 
-import java.util.Iterator;
 
 /**
  * @author
