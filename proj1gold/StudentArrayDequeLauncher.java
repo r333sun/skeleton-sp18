@@ -6,7 +6,7 @@ public class StudentArrayDequeLauncher {
         StudentArrayDeque<Integer> sad1 = new StudentArrayDeque<>();
 
         for (int i = 0; i < 10; i += 1) {
-            double numberBetweenZeroAndOne = StdRandom.uniform();
+            double numberBetweenZeroAndOne = 0;//StdRandom.uniform();
 
             if (numberBetweenZeroAndOne < 0.5) {
                 sad1.addLast(i);
