@@ -1,7 +1,6 @@
 package synthesizer;
 
 import java.util.Iterator;
-import java.util.Random;
 
 
 public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
@@ -69,7 +68,6 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         this.fillCount--;
         return item;
     }
-
 
     /**
      * Return oldest item, but don't remove it.
