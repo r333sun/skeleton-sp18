@@ -3,6 +3,8 @@ package byog.Core;
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 
+import java.io.*;
+
 public class Game {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
@@ -13,6 +15,9 @@ public class Game {
      * Method used for playing a fresh game. The game should start from the main menu.
      */
     public void playWithKeyboard() {
+
+        World world = new World(14, WIDTH, HEIGHT);
+        startGame(world);
     }
 
     /**
@@ -24,6 +29,7 @@ public class Game {
      * world. However, the behavior is slightly different. After playing with "n123sss:q", the game
      * should save, and thus if we then called playWithInputString with the string "l", we'd expect
      * to get the exact same world back again, since this corresponds to loading the saved game.
+     *
      * @param input the input string to feed to your program
      * @return the 2D TETile[][] representing the state of the world
      */
@@ -32,7 +38,80 @@ public class Game {
         // and return a 2D tile representation of the world that would have been
         // drawn if the same inputs had been given to playWithKeyboard().
 
-        TETile[][] finalWorldFrame = null;
-        return finalWorldFrame;
+        char[] arr;
+        World world;
+        String path = "./proj2world.ser";
+        int seed;
+        if (input.equals("l")) {
+            world = loadWorld(path);
+        } else if (input.endsWith(":q")) {
+            seed = getSeed(input.substring(0,input.length()-2));
+            world = new World(seed, WIDTH, HEIGHT);
+            saveWorld(path,world);
+        } else {
+            seed = getSeed(input);
+            world = new World(seed, WIDTH, HEIGHT);
+        }
+
+        startGame(world);
+        return world.getWorld();
     }
+
+
+    private int getSeed(String input){
+        int seed  = 0;
+        char[] arr = input.toCharArray();
+        for(Character c: arr){
+            seed += (int) c;
+        }
+        return seed;
+    }
+    private void startGame(World world) {
+        ter.initialize(world.getWidth(), world.getHeight());
+        ter.renderFrame(world.getWorld());
+    }
+
+    private World loadWorld(String path){
+        File f = new File(path);
+        World world;
+        if (f.exists()) {
+            try {
+                FileInputStream fs = new FileInputStream(f);
+                ObjectInputStream os = new ObjectInputStream(fs);
+                world = (World) os.readObject();
+                os.close();
+                return world;
+            } catch (FileNotFoundException e) {
+                System.out.println("file not found");
+                System.exit(0);
+            } catch (IOException e) {
+                System.out.println(e);
+                System.exit(0);
+            } catch (ClassNotFoundException e) {
+                System.out.println("class not found");
+                System.exit(0);
+            }
+        }
+        return new World(0,WIDTH,HEIGHT);
+    }
+
+    private void saveWorld(String path, World world){
+        File f = new File(path);
+        try {
+            if (!f.exists()) {
+                f.createNewFile();
+            }
+            FileOutputStream fs = new FileOutputStream(f);
+            ObjectOutputStream os = new ObjectOutputStream(fs);
+            os.writeObject(world);
+            os.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("file not found");
+            System.exit(0);
+        } catch (IOException e) {
+            System.out.println(e);
+            System.exit(0);
+        }
+    }
+
 }

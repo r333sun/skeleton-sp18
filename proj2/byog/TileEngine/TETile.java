@@ -1,11 +1,12 @@
 package byog.TileEngine;
 
-import java.awt.Color;
+import byog.Core.RandomUtils;
+import edu.princeton.cs.introcs.StdDraw;
+
+import java.awt.*;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Random;
-
-import edu.princeton.cs.introcs.StdDraw;
-import byog.Core.RandomUtils;
 
 /**
  * The TETile object is used to represent a single tile in your game. A 2D array of tiles make up a
@@ -21,13 +22,14 @@ import byog.Core.RandomUtils;
  * to make your TETile class mutable, if you prefer.
  */
 
-public class TETile {
+public class TETile implements Serializable {
     private final char character; // Do not rename character or the autograder will break.
     private final Color textColor;
     private final Color backgroundColor;
     private final String description;
     private final String filepath;
 
+    private static final long serialVersionUID = 4893847941L;
     /**
      * Full constructor for TETile objects.
      * @param character The character displayed on the screen.
@@ -60,6 +62,7 @@ public class TETile {
         this.description = description;
         this.filepath = null;
     }
+
 
     /**
      * Creates a copy of TETile t, except with given textColor.
