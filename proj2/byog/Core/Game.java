@@ -2,7 +2,6 @@ package byog.Core;
 
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
-import edu.princeton.cs.introcs.StdDraw;
 
 import java.io.*;
 
@@ -54,20 +53,20 @@ public class Game {
 
         ter.initialize(world.getWidth(), world.getHeight());
         startGame(world);
-        StdDraw.enableDoubleBuffering();
-        while (true) {
-            if (!StdDraw.hasNextKeyTyped()) {
-                continue;
-            }
-            char key = StdDraw.nextKeyTyped();
-            if (key == 'a') {
-                world.getPlayer().left();
-                startGame(world);
-            }
-            if (key == 'q') {
-                break;
-            }
-        }
+//        StdDraw.enableDoubleBuffering();
+//        while (true) {
+//            if (!StdDraw.hasNextKeyTyped()) {
+//                continue;
+//            }
+//            char key = StdDraw.nextKeyTyped();
+//            if (key == 'a') {
+//                world.getPlayer().left();
+//                startGame(world);
+//            }
+//            if (key == 'q') {
+//                break;
+//            }
+//        }
         return world.getWorld();
     }
 
