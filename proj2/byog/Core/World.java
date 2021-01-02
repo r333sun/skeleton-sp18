@@ -22,6 +22,15 @@ public class World implements Serializable {
 
     private TETile[][] world;
 
+    private Player player;
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 
     public World(int seed, int width, int height) {
         this.r = new Random(seed);
@@ -33,11 +42,14 @@ public class World implements Serializable {
                 world[x][y] = Tileset.NOTHING;
             }
         }
+
         generateRooms();
         drawRooms();
 //        rooms.forEach(room -> System.out.println(room));
         generateRoads();
         drawRoads();
+        generatePlayer();
+        drawPlayer();
     }
 
     private void generateRooms() {
@@ -46,14 +58,14 @@ public class World implements Serializable {
 //        int roomNum = 7;
         int totalSize = this.width * this.height;
         int currentSize = 0;
-        while ((currentSize < totalSize /7)||(rooms.size() < roomNum)) {
-            int roomWidth = this.width/6;
-            int roomHeight = this.height/2;
-            Point startPoint = new Point(RandomUtils.uniform(r,width),RandomUtils.uniform(r,height));
-            int randomWidth = RandomUtils.uniform(r,3,roomWidth);
-            int randomHeight = RandomUtils.uniform(r,3,roomHeight);
-            Room tmp = new Room(startPoint,randomWidth,randomHeight);
-            if(tmp.isEligible(this.width,this.height) && tmp.canAdd(rooms)){
+        while ((currentSize < totalSize / 7) || (rooms.size() < roomNum)) {
+            int roomWidth = this.width / 6;
+            int roomHeight = this.height / 2;
+            Point startPoint = new Point(RandomUtils.uniform(r, width), RandomUtils.uniform(r, height));
+            int randomWidth = RandomUtils.uniform(r, 3, roomWidth);
+            int randomHeight = RandomUtils.uniform(r, 3, roomHeight);
+            Room tmp = new Room(startPoint, randomWidth, randomHeight);
+            if (tmp.isEligible(this.width, this.height) && tmp.canAdd(rooms)) {
                 rooms.add(tmp);
                 currentSize += randomHeight * randomWidth;
             }
@@ -67,20 +79,38 @@ public class World implements Serializable {
     private void generateRoads() {
         roads = new ArrayList<>();
         for (int i = 1; i < rooms.size(); i++) {
-            roads.add(rooms.get(i-1).getRoadTo(rooms.get(i),r,world));
+            roads.add(rooms.get(i - 1).getRoadTo(rooms.get(i), r, world));
         }
         Room room = rooms.get(0);
-        for(int i = 2; i < rooms.size() ; i++){
-            if(!room.isStraightTo(rooms.get(i))){
-                roads.add(new LRoad(room,rooms.get(i),this.r,world));
+        for (int i = 2; i < rooms.size(); i++) {
+            if (!room.isStraightTo(rooms.get(i))) {
+                roads.add(new LRoad(room, rooms.get(i), this.r, world));
             }
         }
     }
 
-
     private void drawRoads() {
-        roads.forEach(road -> road.draw(world));
+        roads.forEach(road -> {
+            if (road != null) {
+                road.draw(world);
+            }
+        });
 //        roads.forEach(road -> System.out.println(road));
+    }
+
+    private void generatePlayer() {
+        int x = RandomUtils.uniform(r, width);
+        System.out.println(111);
+        int y = RandomUtils.uniform(r, height);
+        while (world[x][y] != Tileset.FLOOR) {
+            x = RandomUtils.uniform(r, width);
+            y = RandomUtils.uniform(r, height);
+        }
+        this.player = new Player(x, y, world);
+    }
+
+    private void drawPlayer() {
+        player.draw();
     }
 
     public int getHeight() {

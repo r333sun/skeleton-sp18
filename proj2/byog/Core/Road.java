@@ -61,8 +61,8 @@ public class Road implements Serializable {
 //                world[i][yMin] = Tileset.FLOOR;
 //            }
 //        }
-        drawRoad(xMin,xMax,yMin,yMax,world);
-        drawWalls(xMin,xMax,yMin,yMax,world);
+        drawRoad(xMin, xMax, yMin, yMax, world);
+        drawWalls(xMin, xMax, yMin, yMax, world);
 //        world[turnPoint.X][turnPoint.Y] = Tileset.FLOWER;
         world[startPoint.X][startPoint.Y] = Tileset.FLOOR;
         world[endPoint.X][endPoint.Y] = Tileset.FLOOR;
@@ -88,20 +88,20 @@ public class Road implements Serializable {
         }
     }
 
-    protected void drawRoad(int xMin, int xMax, int yMin, int yMax, TETile[][] world){
-        for(int x = xMin; x <= xMax;x++){
-            for(int y = yMin; y <= yMax; y++){
+    protected void drawRoad(int xMin, int xMax, int yMin, int yMax, TETile[][] world) {
+        for (int x = xMin; x <= xMax; x++) {
+            for (int y = yMin; y <= yMax; y++) {
                 world[x][y] = Tileset.FLOOR;
             }
         }
     }
 
-    protected void drawWalls(int xMin, int xMax, int yMin, int yMax, TETile[][] world){
-        if(xMin == xMax){
-            drawVerticalWalls(xMin,yMin,yMax,world);
+    protected void drawWalls(int xMin, int xMax, int yMin, int yMax, TETile[][] world) {
+        if (xMin == xMax) {
+            drawVerticalWalls(xMin, yMin, yMax, world);
         }
-        if(yMin == yMax){
-            drawHorizontalWalls(yMin,xMin,xMax,world);
+        if (yMin == yMax) {
+            drawHorizontalWalls(yMin, xMin, xMax, world);
         }
     }
 

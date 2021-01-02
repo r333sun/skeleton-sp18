@@ -19,14 +19,22 @@ public class LRoad extends Road {
         int y = RandomUtils.uniform(random, room2.getyLower() + 1, room2.getyUpper() - 1);
         int count = 0;
         while (world[x][y] != Tileset.NOTHING) {
-            if(count < 3) {
+            if(count < 5) {
                 x = RandomUtils.uniform(random, room.getxLower() + 1, room.getxUpper() - 1);
                 y = RandomUtils.uniform(random, room2.getyLower() + 1, room2.getyUpper() - 1);
                 count++;
             }else{
                 x = RandomUtils.uniform(random, room2.getxLower() + 1, room2.getxUpper() - 1);
                 y = RandomUtils.uniform(random, room.getyLower() + 1, room.getyUpper() - 1);
+                count++;
             }
+            if(count >= 10){
+                break;
+            }
+        }
+        if(count >= 10){
+            turnPoint = null;
+            return;
         }
         turnPoint = new Point(x, y);
         startPoint = pointToRoom(turnPoint, room);
@@ -36,8 +44,10 @@ public class LRoad extends Road {
 
     @Override
     public void draw(TETile[][] world) {
-        drawLRoad(world);
-        amendWalls(world);
+        if(turnPoint != null) {
+            drawLRoad(world);
+            amendWalls(world);
+        }
 //        world[turnPoint.X][turnPoint.Y] = Tileset.FLOWER;
 //        world[startPoint.X][startPoint.Y] = Tileset.GRASS;
 //        world[endPoint.X][endPoint.Y] = Tileset.GRASS;
@@ -49,14 +59,14 @@ public class LRoad extends Road {
 //            drawVerticalWalls(turnPoint.X,Math.min(turnPoint.Y,startPoint.Y),
 //                    Math.max(turnPoint.Y,startPoint.Y),world);
 //        }
-        drawRoad(Math.min(startPoint.X, turnPoint.X), Math.max(startPoint.X, turnPoint.X),
-                Math.min(startPoint.Y, turnPoint.Y), Math.max(startPoint.Y, turnPoint.Y), world);
-        drawWalls(Math.min(startPoint.X, turnPoint.X), Math.max(startPoint.X, turnPoint.X),
-                Math.min(startPoint.Y, turnPoint.Y), Math.max(startPoint.Y, turnPoint.Y), world);
-        drawRoad(Math.min(endPoint.X, turnPoint.X), Math.max(endPoint.X, turnPoint.X),
-                Math.min(endPoint.Y, turnPoint.Y), Math.max(endPoint.Y, turnPoint.Y), world);
-        drawWalls(Math.min(endPoint.X, turnPoint.X), Math.max(endPoint.X, turnPoint.X),
-                Math.min(endPoint.Y, turnPoint.Y), Math.max(endPoint.Y, turnPoint.Y), world);
+            drawRoad(Math.min(startPoint.X, turnPoint.X), Math.max(startPoint.X, turnPoint.X),
+                    Math.min(startPoint.Y, turnPoint.Y), Math.max(startPoint.Y, turnPoint.Y), world);
+            drawWalls(Math.min(startPoint.X, turnPoint.X), Math.max(startPoint.X, turnPoint.X),
+                    Math.min(startPoint.Y, turnPoint.Y), Math.max(startPoint.Y, turnPoint.Y), world);
+            drawRoad(Math.min(endPoint.X, turnPoint.X), Math.max(endPoint.X, turnPoint.X),
+                    Math.min(endPoint.Y, turnPoint.Y), Math.max(endPoint.Y, turnPoint.Y), world);
+            drawWalls(Math.min(endPoint.X, turnPoint.X), Math.max(endPoint.X, turnPoint.X),
+                    Math.min(endPoint.Y, turnPoint.Y), Math.max(endPoint.Y, turnPoint.Y), world);
     }
 
     private void amendWalls(TETile[][] world) {

@@ -72,33 +72,34 @@ public class Room implements Serializable {
         return false;
     }
 
-    public Road getRoadTo(Room room, Random r,TETile[][] world) {
+    public Road getRoadTo(Room room, Random r, TETile[][] world) {
         Road road = null;
         if (isStraightTo(room)) {
             road = getStraightRoad(room, r);
         } else {
-            road = getLRoad(room, r,world);
+            road = getLRoad(room, r, world);
         }
         return road;
     }
 
-    private Road getLRoad(Room room, Random r,TETile[][] world) {
-        return new LRoad(this,room,r,world);
+    private Road getLRoad(Room room, Random r, TETile[][] world) {
+        return new LRoad(this, room, r, world);
     }
 
     private Road getStraightRoad(Room room, Random r) {
         return new Road(this, room, r);
     }
 
-    public boolean isContainPoint(Point point){
-        if(point.X >= xLower && point.X <= xLower){
+    public boolean isContainPoint(Point point) {
+        if (point.X >= xLower && point.X <= xLower) {
             return true;
         }
-        if(point.Y >= yLower && point.Y <= yUpper){
+        if (point.Y >= yLower && point.Y <= yUpper) {
             return true;
         }
         return false;
     }
+
     public boolean isStraightTo(Room room) {
         return GameUtils.isInRange(xLower + 1, xUpper - 1, room.getxLower() + 1, room.getxUpper() - 1) ||
                 GameUtils.isInRange(yLower + 1, yUpper - 1, room.getyLower() + 1, room.getyUpper() - 1);

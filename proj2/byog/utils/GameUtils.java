@@ -19,6 +19,7 @@ public class GameUtils {
 
     /**
      * if [num1,num2] has overlapping part with [num3,num4]
+     *
      * @return true if there have common part
      */
     public static boolean isInRange(int num1, int num2, int num3, int num4) {
@@ -36,28 +37,29 @@ public class GameUtils {
 
     /**
      * generate a int number in the range of middle of the number
+     *
      * @return int
      */
-    public static int generateMiddlePoint(int num1, int num2, int num3, int num4, Random random){
-       int[] arr = new int[]{num1,num2,num3,num4};
-       Arrays.sort(arr);
-       arr[1] += 1;
-       arr[2] -= 1;
+    public static int generateMiddlePoint(int num1, int num2, int num3, int num4, Random random) {
+        int[] arr = new int[]{num1, num2, num3, num4};
+        Arrays.sort(arr);
+        arr[1] += 1;
+        arr[2] -= 1;
         Arrays.sort(arr);
 //        System.out.println(Arrays.toString(arr));
-       if(arr[1] == arr[2]){
-           return arr[1];
-       }
-        return RandomUtils.uniform(random,arr[1],arr[2]);
+        if (arr[1] == arr[2]) {
+            return arr[1];
+        }
+        return RandomUtils.uniform(random, arr[1], arr[2]);
     }
 
-    public static boolean pointInRange(int num, int lower, int upper){
+    public static boolean pointInRange(int num, int lower, int upper) {
         return num <= upper && num >= lower;
     }
 
     public static void main(String[] args) {
         String test = "123456:q";
-        System.out.println(test.substring(0,test.length()-2));
+        System.out.println(test.substring(0, test.length() - 2));
         System.out.println(test);
     }
 }
