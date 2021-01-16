@@ -2,6 +2,7 @@ package byog.Core;
 
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
+import edu.princeton.cs.introcs.StdDraw;
 
 import java.io.*;
 
@@ -16,8 +17,52 @@ public class Game {
      */
     public void playWithKeyboard() {
 
-        World world = new World(14, WIDTH, HEIGHT);
+        World world;
+        String path = "./proj2world.ser";
+        int seed = 0;
+        StdDraw.setCanvasSize(WIDTH,HEIGHT);
+        String input = "0";
+        StdDraw.text(10,10,"123");
+        if (input.equals("l")) {
+            world = loadWorld(path);
+        } else if (input.endsWith(":q")) {
+            seed = getSeed(input.substring(0,input.length()-2));
+            world = new World(seed, WIDTH, HEIGHT);
+            saveWorld(path,world);
+        } else {
+            seed = getSeed(input);
+            world = new World(seed, WIDTH, HEIGHT);
+        }
+
+        ter.initialize(world.getWidth(), world.getHeight());
         startGame(world);
+        StdDraw.enableDoubleBuffering();
+        while(true){
+            if (!StdDraw.hasNextKeyTyped()) {
+                continue;
+            }
+            char key = StdDraw.nextKeyTyped();
+            if(key == 'a'){
+                world.getPlayer().left();
+            }
+            if(key == 's'){
+                world.getPlayer().down();
+            }
+            if(key == 'd'){
+                world.getPlayer().right();
+            }
+            if(key == 'w'){
+                world.getPlayer().up();
+            }
+            if(key == 'n'){
+                world = new World(++seed,world.getWidth(),world.getHeight());
+            }
+            startGame(world);
+            if(key == 'q'){
+                System.exit(0);
+            }
+        }
+//        return world.getWorld();
     }
 
     /**
@@ -39,13 +84,13 @@ public class Game {
         // drawn if the same inputs had been given to playWithKeyboard().
         World world;
         String path = "./proj2world.ser";
-        int seed;
+        int seed = 0;
         if (input.equals("l")) {
             world = loadWorld(path);
         } else if (input.endsWith(":q")) {
-            seed = getSeed(input.substring(0, input.length() - 2));
+            seed = getSeed(input.substring(0,input.length()-2));
             world = new World(seed, WIDTH, HEIGHT);
-            saveWorld(path, world);
+            saveWorld(path,world);
         } else {
             seed = getSeed(input);
             world = new World(seed, WIDTH, HEIGHT);
@@ -53,39 +98,55 @@ public class Game {
 
         ter.initialize(world.getWidth(), world.getHeight());
         startGame(world);
-//        StdDraw.enableDoubleBuffering();
-//        while (true) {
-//            if (!StdDraw.hasNextKeyTyped()) {
-//                continue;
-//            }
-//            char key = StdDraw.nextKeyTyped();
-//            if (key == 'a') {
-//                world.getPlayer().left();
-//                startGame(world);
-//            }
-//            if (key == 'q') {
-//                break;
-//            }
-//        }
+        StdDraw.enableDoubleBuffering();
+        while(true){
+            if (!StdDraw.hasNextKeyTyped()) {
+                continue;
+            }
+            char key = StdDraw.nextKeyTyped();
+            if(key == 'a'){
+                world.getPlayer().left();
+                startGame(world);
+            }
+            if(key == 's'){
+                world.getPlayer().down();
+                startGame(world);
+            }
+            if(key == 'd'){
+                world.getPlayer().right();
+                startGame(world);
+            }
+            if(key == 'w'){
+                world.getPlayer().up();
+                startGame(world);
+            }
+            if(key == 'n'){
+                world = new World(++seed,world.getWidth(),world.getHeight());
+                startGame(world);
+            }
+            if(key == 'q'){
+//                System.exit(0);
+                break;
+            }
+        }
         return world.getWorld();
     }
 
 
-    private int getSeed(String input) {
-        int seed = 0;
+    private int getSeed(String input){
+        int seed  = 0;
         char[] arr = input.toCharArray();
-        for (Character c : arr) {
+        for(Character c: arr){
             seed += (int) c;
         }
         return seed;
     }
-
     private void startGame(World world) {
 
         ter.renderFrame(world.getWorld());
     }
 
-    private World loadWorld(String path) {
+    private World loadWorld(String path){
         File f = new File(path);
         World world;
         if (f.exists()) {
@@ -106,10 +167,10 @@ public class Game {
                 System.exit(0);
             }
         }
-        return new World(0, WIDTH, HEIGHT);
+        return new World(0,WIDTH,HEIGHT);
     }
 
-    private void saveWorld(String path, World world) {
+    private void saveWorld(String path, World world){
         File f = new File(path);
         try {
             if (!f.exists()) {

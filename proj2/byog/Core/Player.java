@@ -28,17 +28,17 @@ public class Player implements Serializable {
 
     public void up() {
         if (world[x][y + 1] == Tileset.FLOOR) {
+            world[x][y] = Tileset.FLOOR;
             this.y += 1;
         }
-        world[x][y] = Tileset.FLOOR;
         draw();
     }
 
     public void down() {
         if (world[x][y - 1] == Tileset.FLOOR) {
+            world[x][y] = Tileset.FLOOR;
             this.y -= 1;
         }
-        world[x][y] = Tileset.FLOOR;
         draw();
     }
 
@@ -52,9 +52,9 @@ public class Player implements Serializable {
 
     public void right() {
         if (world[x + 1][y] == Tileset.FLOOR) {
-            this.y += 1;
+            world[x][y] = Tileset.FLOOR;
+            this.x += 1;
         }
-        world[x][y] = Tileset.FLOOR;
         draw();
     }
 }

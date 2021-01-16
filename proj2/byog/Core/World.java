@@ -22,15 +22,15 @@ public class World implements Serializable {
 
     private TETile[][] world;
 
-//    private Player player;
+    private Player player;
 
-//    public Player getPlayer() {
-//        return player;
-//    }
-//
-//    public void setPlayer(Player player) {
-//        this.player = player;
-//    }
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 
     public World(int seed, int width, int height) {
         this.r = new Random(seed);
@@ -48,8 +48,8 @@ public class World implements Serializable {
 //        rooms.forEach(room -> System.out.println(room));
         generateRoads();
         drawRoads();
-//        generatePlayer();
-//        drawPlayer();
+        generatePlayer();
+        drawPlayer();
     }
 
     private void generateRooms() {
@@ -98,20 +98,20 @@ public class World implements Serializable {
 //        roads.forEach(road -> System.out.println(road));
     }
 
-//    private void generatePlayer() {
-//        int x = RandomUtils.uniform(r, width);
-//        System.out.println(111);
-//        int y = RandomUtils.uniform(r, height);
-//        while (world[x][y] != Tileset.FLOOR) {
-//            x = RandomUtils.uniform(r, width);
-//            y = RandomUtils.uniform(r, height);
-//        }
-//        this.player = new Player(x, y, world);
-//    }
-//
-//    private void drawPlayer() {
-//        player.draw();
-//    }
+    private void generatePlayer() {
+        int x = RandomUtils.uniform(r, width);
+        System.out.println(111);
+        int y = RandomUtils.uniform(r, height);
+        while (world[x][y] != Tileset.FLOOR) {
+            x = RandomUtils.uniform(r, width);
+            y = RandomUtils.uniform(r, height);
+        }
+        this.player = new Player(x, y, world);
+    }
+
+    private void drawPlayer() {
+        player.draw();
+    }
 
     public int getHeight() {
         return height;
