@@ -19,7 +19,7 @@ public class PercolationStats {
                 int col = StdRandom.uniform(N);
                 p.open(row, col);
             }
-            threshold[i] = p.numberOfOpenSites() / (N * N);
+            threshold[i] = (double)p.numberOfOpenSites() / (N * N);
         }
         this.mean = StdStats.mean(threshold);
         this.stddev = StdStats.stddev(threshold);
@@ -42,4 +42,5 @@ public class PercolationStats {
     public double confidenceHigh() {
         return this.confidenceHigh;
     }
+    
 }
