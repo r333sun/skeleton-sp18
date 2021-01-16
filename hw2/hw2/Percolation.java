@@ -33,7 +33,8 @@ public class Percolation {
     //Open the site (row, col) if it is not open
     public void open(int row, int col) {
         if (col >= n || row >= n) {
-            throw new IndexOutOfBoundsException("(" + row + ", " + col + ") is not in the universe");
+            throw new IndexOutOfBoundsException("(" + row + ", " + col + ") is " +
+                    "not in the universe");
         } else {
             if (!open[row][col]) {
                 open[row][col] = true;
@@ -48,14 +49,16 @@ public class Percolation {
         if (col < n && row < n) {
             return open[row][col];
         } else {
-            throw new IndexOutOfBoundsException("(" + row + ", " + col + ") is not in the universe");
+            throw new IndexOutOfBoundsException("(" + row + ", " + col + ")" +
+                    " is not in the universe");
         }
     }
 
     // is the site(row, col) full?
     public boolean isFull(int row, int col) {
         if (col >= n || row >= n) {
-            throw new IndexOutOfBoundsException("(" + row + ", " + col + ") is not in the universe");
+            throw new IndexOutOfBoundsException("(" + row + ", " + col + ")" +
+                    " is not in the universe");
         }
         return isOpen(row, col) && uddeBox.connected(top, xyToInt(row, col));
     }
@@ -67,6 +70,9 @@ public class Percolation {
 
     //does the system percolate?
     public boolean percolates() {
+        if (n == 1) {
+            return isOpen(0, 0);
+        }
         return uf.connected(top, bottom);
     }
 
