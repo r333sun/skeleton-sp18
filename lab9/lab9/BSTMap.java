@@ -90,7 +90,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      */
     @Override
     public void put(K key, V value) {
-        if (this.get(key) != null) {
+        if (this.get(key) == null) {
             size++;
         }
         root = putHelper(key, value, root);
