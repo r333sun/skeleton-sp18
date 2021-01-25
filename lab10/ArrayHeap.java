@@ -161,7 +161,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     @Override
     public T peek() {
         /* TODO: Your code here! */
-        return contents[0].item();
+        return contents[1].item();
     }
 
     /**
