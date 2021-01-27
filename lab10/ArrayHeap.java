@@ -113,7 +113,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
 
         /** TODO: Your code here. */
         int pIndex = parentIndex(index);
-        while (min(pIndex, index) == index && pIndex != index) {
+        while (index > 1 && min(pIndex, index) == index) {
             swap(pIndex, index);
             index = pIndex;
             pIndex = parentIndex(index);
@@ -129,7 +129,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
 
         /** TODO: Your code here. */
         int minIndex = min(leftIndex(index), rightIndex(index));
-        while (min(index, minIndex) == minIndex) {
+        while (minIndex <= size && min(index, minIndex) == minIndex) {
             swap(index, minIndex);
             index = minIndex;
             minIndex = min(leftIndex(index), rightIndex(index));
@@ -149,9 +149,10 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
 
         /* TODO: Your code here! */
         size += 1;
+        int index = size;
         Node node = new Node(item, priority);
-        contents[size] = node;
-        swim(size);
+        contents[index] = node;
+        swim(index);
     }
 
     /**
@@ -204,7 +205,7 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     public void changePriority(T item, double priority) {
         /* TODO: Your code here! */
         int index;
-        for (int i = 1; i < size; i++) {
+        for (int i = 1; i <= size(); i++) {
             if (contents[i].item().equals(item)) {
                 index = i;
                 if (priority > contents[index].priority()) {
@@ -315,8 +316,8 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
     @Test
     public void testSwim() {
         ArrayHeap<String> pq = new ArrayHeap<>();
-        pq.size = 7;
-        for (int i = 1; i <= 7; i += 1) {
+        pq.size = 10;
+        for (int i = 1; i <= 10; i += 1) {
             pq.contents[i] = new ArrayHeap<String>.Node("x" + i, i);
         }
         // Change item x6's priority to a low value.
@@ -441,10 +442,13 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         pq.insert("e", 5);
         pq.insert("b", 2);
         pq.insert("c", 3);
+        System.out.println(pq.size());
         pq.insert("d", 4);
 
+//        pq.changePriority("a",10);
+
         int i = 0;
-        String[] expected = {"a", "b", "c", "c", "d", "d", "e", "g", "h", "i"};
+        String[] expected = {"b", "c", "c", "d", "d", "e", "g", "h", "i", "a"};
         while (pq.size() > 1) {
             assertEquals(expected[i], pq.removeMin());
             i += 1;
