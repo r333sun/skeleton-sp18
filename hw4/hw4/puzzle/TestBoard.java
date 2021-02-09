@@ -28,12 +28,13 @@ public class TestBoard {
     @Test
     public void testDistance(){
         int[][] board = new int[][]{
-            {8,1,3},
-            {4,0,2},
-            {7,6,5},
+            {1,2},
+            {3,0},
         };
         Board b = new Board(board);
         System.out.println(b.hamming());
         System.out.println(b.manhattan());
+        System.out.println(b.estimatedDistanceToGoal());
+        System.out.println(b.isGoal());
     }
 }

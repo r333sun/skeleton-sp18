@@ -1,6 +1,7 @@
 package hw4.puzzle;
 
-import edu.princeton.cs.algs4.*;
+import edu.princeton.cs.algs4.MinPQ;
+import edu.princeton.cs.algs4.Stack;
 
 import java.util.Comparator;
 
@@ -16,6 +17,10 @@ public class Solver {
         SearchNode init = new SearchNode(initial, 0, null);
         minPQ.insert(init);
         boolean found = false;
+        if(init.worldState.isGoal()){
+            last = init;
+            found = true;
+        }
         while (!found) {
             SearchNode curr = minPQ.delMin();
             Iterable<WorldState> neighbors = curr.worldState.neighbors();
@@ -87,10 +92,10 @@ public class Solver {
 
         @Override
         public String toString() {
-            return "SearchNode{" +
-                    "worldState=" + worldState +
-                    ", distanceToInitial=" + distanceToInitial +
-                    '}';
+            return "SearchNode{"
+                    + "worldState=" + worldState
+                    + ", distanceToInitial=" + distanceToInitial
+                    + '}';
         }
     }
 }

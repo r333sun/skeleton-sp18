@@ -2,7 +2,9 @@ package hw4.puzzle;
 
 import edu.princeton.cs.algs4.Queue;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Board implements WorldState {
@@ -105,25 +107,35 @@ public class Board implements WorldState {
     }
 
     public boolean equals(Object y) {
-        if(this == y){
+        if (this == y) {
             return true;
         }
-        
-        if(y == null || y.getClass() != this.getClass()){
+
+        if (y == null || y.getClass() != this.getClass()) {
             return false;
         }
 
         Board board = (Board) y;
-        if(tiles != null){
+        if (board.size() != size()) {
+            return false;
+        }
+        if (tiles != null) {
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
-                    if(tileAt(i,j) != board.tileAt(i,j)){
+                    if (tileAt(i, j) != board.tileAt(i, j)) {
                         return false;
                     }
                 }
             }
         }
         return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(N);
+        result = 31 * result + Arrays.hashCode(tiles);
+        return result;
     }
 
     private int manhattan1Point(int x, int y, int curr) {
