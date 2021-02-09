@@ -3,19 +3,17 @@ package hw4.puzzle;
 import edu.princeton.cs.algs4.Queue;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 public class Board implements WorldState {
     private static final int BLANK = 0;
     private int[][] tiles;
-    private int N;
+    private int n;
 
     public Board(int[][] tiles) {
-        N = tiles.length;
-        this.tiles = new int[N][N];
-        for (int i = 0; i < N; i++) {
+        n = tiles.length;
+        this.tiles = new int[n][n];
+        for (int i = 0; i < n; i++) {
             for (int j = 0; j < tiles[0].length; j++) {
                 this.tiles[i][j] = tiles[i][j];
             }
@@ -24,17 +22,17 @@ public class Board implements WorldState {
     }
 
     public int tileAt(int i, int j) {
-        if (i < 0 || i >= N) {
+        if (i < 0 || i >= n) {
             throw new IndexOutOfBoundsException("Index of bound");
         }
-        if (j < 0 || j >= N) {
+        if (j < 0 || j >= n) {
             throw new IndexOutOfBoundsException("Index of bound");
         }
         return tiles[i][j];
     }
 
     public int size() {
-        return N;
+        return n;
     }
 
     public Iterable<WorldState> neighbors() {
@@ -74,9 +72,9 @@ public class Board implements WorldState {
     public int hamming() {
         int distance = 0;
         int cnt = 1;
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                if (i == N - 1 && j == N - 1) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i == n - 1 && j == n - 1) {
                     break;
                 }
                 if (tileAt(i, j) != cnt) {
@@ -90,8 +88,8 @@ public class Board implements WorldState {
 
     public int manhattan() {
         int distance = 0;
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
                 int curr = tileAt(i, j);
                 if (curr == BLANK) {
                     continue;
@@ -120,8 +118,8 @@ public class Board implements WorldState {
             return false;
         }
         if (tiles != null) {
-            for (int i = 0; i < N; i++) {
-                for (int j = 0; j < N; j++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
                     if (tileAt(i, j) != board.tileAt(i, j)) {
                         return false;
                     }
@@ -133,15 +131,15 @@ public class Board implements WorldState {
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(N);
+        int result = Objects.hash(n);
         result = 31 * result + Arrays.hashCode(tiles);
         return result;
     }
 
     private int manhattan1Point(int x, int y, int curr) {
         curr -= 1;
-        int currRow = curr / N;
-        int currCol = curr % N;
+        int currRow = curr / n;
+        int currCol = curr % n;
         return Math.abs(currRow - x) + Math.abs(currCol - y);
     }
 

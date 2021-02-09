@@ -6,7 +6,7 @@ import edu.princeton.cs.algs4.Stack;
 import java.util.Comparator;
 
 public class Solver {
-    SearchNode last;
+    private SearchNode last;
 
     public Solver(WorldState initial) {
         MinPQ<SearchNode> minPQ = new MinPQ((Comparator<SearchNode>) (o1, o2) -> {
@@ -17,7 +17,7 @@ public class Solver {
         SearchNode init = new SearchNode(initial, 0, null);
         minPQ.insert(init);
         boolean found = false;
-        if(init.worldState.isGoal()){
+        if (init.worldState.isGoal()) {
             last = init;
             found = true;
         }
