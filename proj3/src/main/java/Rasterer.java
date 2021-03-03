@@ -46,7 +46,6 @@ public class Rasterer {
      * {lrlon=-122.2104604264636, ullon=-122.30410170759153, w=1085.0, h=566.0, ullat=37.870213571328854, lrlat=37.8318576119893}
      */
     public Map<String, Object> getMapRaster(Map<String, Double> params) {
-        System.out.println(params);
         Map<String, Object> results = new HashMap<>();
         double lrlon = params.get("lrlon"), ullon = params.get("ullon"), width = params.get("w"),
                 lrlat = params.get("lrlat"), ullat = params.get("ullat");
@@ -67,7 +66,6 @@ public class Rasterer {
             results.put("depth", depth);
             String[][] renderGrid = getRenderGrid(startX, endX, startY, endY, depth);
             results.put("render_grid", renderGrid);
-            System.out.println(results);
         }
         return results;
     }
