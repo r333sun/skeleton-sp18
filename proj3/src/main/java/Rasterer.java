@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +9,8 @@ import java.util.Map;
  */
 public class Rasterer {
 
-    private final double d0_res = Math.abs(MapServer.ROOT_LRLON - MapServer.ROOT_ULLON) / MapServer.TILE_SIZE;
+    private final double d0Res = Math.abs(MapServer.ROOT_LRLON - MapServer.ROOT_ULLON)
+            / MapServer.TILE_SIZE;
 
     public Rasterer() {
         // YOUR CODE HERE
@@ -53,42 +53,42 @@ public class Rasterer {
         if (!validateCo(ullon, ullat, lrlon, lrlat)) {
             results.put("query_success", false);
         } else {
-            double asked_res = Math.abs(lrlon - ullon) / width;
-            int depth = Math.min(7, (int) Math.ceil(log2(d0_res / asked_res)));
-            double X_res = Math.abs(MapServer.ROOT_ULLON - MapServer.ROOT_LRLON) / Math.pow(2, depth);
-            double Y_res = Math.abs(MapServer.ROOT_ULLAT - MapServer.ROOT_LRLAT) / Math.pow(2, depth);
+            double askedRes = Math.abs(lrlon - ullon) / width;
+            int depth = Math.min(7, (int) Math.ceil(log2(d0Res / askedRes)));
+            double xRes = Math.abs(MapServer.ROOT_ULLON - MapServer.ROOT_LRLON) / Math.pow(2, depth);
+            double yRes = Math.abs(MapServer.ROOT_ULLAT - MapServer.ROOT_LRLAT) / Math.pow(2, depth);
             int startX = getX(ullon, depth), endX = getX(lrlon, depth),
                     startY = getY(ullat, depth), endY = getY(lrlat, depth);
-            results.put("raster_ul_lon", MapServer.ROOT_ULLON + X_res * startX);
-            results.put("raster_ul_lat", MapServer.ROOT_ULLAT - Y_res * startY);
-            results.put("raster_lr_lon", MapServer.ROOT_ULLON + X_res * (endX + 1));
-            results.put("raster_lr_lat", MapServer.ROOT_ULLAT - Y_res * (endY + 1));
+            results.put("raster_ul_lon", MapServer.ROOT_ULLON + xRes * startX);
+            results.put("raster_ul_lat", MapServer.ROOT_ULLAT - yRes * startY);
+            results.put("raster_lr_lon", MapServer.ROOT_ULLON + xRes * (endX + 1));
+            results.put("raster_lr_lat", MapServer.ROOT_ULLAT - yRes * (endY + 1));
             results.put("query_success", true);
             results.put("depth", depth);
-            String[][] render_grid = getRender_grid(startX, endX, startY, endY, depth);
-            results.put("render_grid", render_grid);
+            String[][] renderGrid = getRenderGrid(startX, endX, startY, endY, depth);
+            results.put("render_grid", renderGrid);
             System.out.println(results);
         }
         return results;
     }
 
     private boolean validateCo(double ullon, double ullat, double lrlon, double lrlat) {
-        if(lrlon <= MapServer.ROOT_ULLON){
+        if (lrlon <= MapServer.ROOT_ULLON) {
             return false;
         }
-        if(ullon >= MapServer.ROOT_LRLON){
+        if (ullon >= MapServer.ROOT_LRLON) {
             return false;
         }
-        if(lrlat >= MapServer.ROOT_ULLAT){
+        if (lrlat >= MapServer.ROOT_ULLAT) {
             return false;
         }
-        if(ullat <= MapServer.ROOT_LRLAT){
+        if (ullat <= MapServer.ROOT_LRLAT) {
             return false;
         }
         return true;
     }
 
-    private String[][] getRender_grid(int startX, int endX, int startY, int endY, int depth) {
+    private String[][] getRenderGrid(int startX, int endX, int startY, int endY, int depth) {
         String name = "d" + depth + "_";
         int col = endX - startX + 1;
         int row = endY - startY + 1;
