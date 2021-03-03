@@ -43,7 +43,8 @@ public class Rasterer {
      * "query_success" : Boolean, whether the query was able to successfully complete; don't
      * forget to set this to true on success! <br>
      * <p>
-     * {lrlon=-122.2104604264636, ullon=-122.30410170759153, w=1085.0, h=566.0, ullat=37.870213571328854, lrlat=37.8318576119893}
+     * {lrlon=-122.2104604264636, ullon=-122.30410170759153, w=1085.0, h=566.0,
+     * ullat=37.870213571328854, lrlat=37.8318576119893}
      */
     public Map<String, Object> getMapRaster(Map<String, Double> params) {
         Map<String, Object> results = new HashMap<>();
@@ -54,8 +55,10 @@ public class Rasterer {
         } else {
             double askedRes = Math.abs(lrlon - ullon) / width;
             int depth = Math.min(7, (int) Math.ceil(log2(d0Res / askedRes)));
-            double xRes = Math.abs(MapServer.ROOT_ULLON - MapServer.ROOT_LRLON) / Math.pow(2, depth);
-            double yRes = Math.abs(MapServer.ROOT_ULLAT - MapServer.ROOT_LRLAT) / Math.pow(2, depth);
+            double xRes = Math.abs(MapServer.ROOT_ULLON - MapServer.ROOT_LRLON)
+                    / Math.pow(2, depth);
+            double yRes = Math.abs(MapServer.ROOT_ULLAT - MapServer.ROOT_LRLAT)
+                    / Math.pow(2, depth);
             int startX = getX(ullon, depth), endX = getX(lrlon, depth),
                     startY = getY(ullat, depth), endY = getY(lrlat, depth);
             results.put("raster_ul_lon", MapServer.ROOT_ULLON + xRes * startX);
