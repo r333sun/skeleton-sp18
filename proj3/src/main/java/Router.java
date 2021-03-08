@@ -57,6 +57,7 @@ public class Router {
         public static final int SHARP_LEFT = 6;
         public static final int SHARP_RIGHT = 7;
 
+
         /** Number of directions supported. */
         public static final int NUM_DIRECTIONS = 8;
 
