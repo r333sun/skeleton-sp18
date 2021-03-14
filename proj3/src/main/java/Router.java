@@ -47,10 +47,11 @@ public class Router {
             if (!marked.contains(v)) {
                 marked.add(v);
                 for (Long w : g.adjacent(v)) {
-                    if (!best.contains(w) || g.distance(source, v) + g.distance(v, w) < best.getDistance(w)) {
-                        best.put(w,g.distance(source, v) + g.distance(v, w),v);
-                        fringe.add(new Distance(w,
-                                g.distance(source, v) + g.distance(v, w) + g.distance(w, target)));
+                    if (!best.contains(w) || best.getDistance(v) + g.distance(v, w) < best.getDistance(w)) {
+                        best.put(w,best.getDistance(v) + g.distance(v, w),v);
+                        fringe.add(new Distance(
+                                w,best.getDistance(v) + g.distance(v,w) + g.distance(w,target)
+                        ));
                     }
                 }
             }
