@@ -36,30 +36,30 @@ public class Router {
         marked = new HashSet<>();
         fringe = new PriorityQueue<>();
         best = new Best();
-        fringe.add(new Distance(source,0));
-        best.put(source, 0.0,null);
+        fringe.add(new Distance(source, 0));
+        best.put(source, 0.0, null);
         while (!fringe.isEmpty()) {
             Distance d = fringe.remove();
             Long v = d.node;
-            if(v.equals(target)){
+            if (v.equals(target)) {
                 break;
             }
             if (!marked.contains(v)) {
                 marked.add(v);
                 for (Long w : g.adjacent(v)) {
                     if (!best.contains(w) || best.getDistance(v) + g.distance(v, w) < best.getDistance(w)) {
-                        best.put(w,best.getDistance(v) + g.distance(v, w),v);
+                        best.put(w, best.getDistance(v) + g.distance(v, w), v);
                         fringe.add(new Distance(
-                                w,best.getDistance(v) + g.distance(v,w) + g.distance(w,target)
+                                w, best.getDistance(v) + g.distance(v, w) + g.distance(w, target)
                         ));
                     }
                 }
             }
         }
-        result.add(0,target);
+        result.add(0, target);
         Long next = best.getParent(target);
-        while(next != null){
-            result.add(0,next);
+        while (next != null) {
+            result.add(0, next);
             next = best.getParent(next);
         }
         return result; // FIXME
@@ -240,35 +240,35 @@ public class Router {
 
         @Override
         public int compareTo(Distance o) {
-            if(o.distance == distance){
+            if (o.distance == distance) {
                 return 0;
             }
-            if(distance >= o.distance){
+            if (distance >= o.distance) {
                 return 1;
-            }else {
+            } else {
                 return -1;
             }
         }
     }
-    
-    private static class Best{
+
+    private static class Best {
         HashMap<Long, Double> distMap = new HashMap<>();
         HashMap<Long, Long> parentNode = new HashMap<>();
-        
-        public void put(Long s, double distance, Long parent){
-            distMap.put(s,distance);
-            parentNode.put(s,parent);
+
+        public void put(Long s, double distance, Long parent) {
+            distMap.put(s, distance);
+            parentNode.put(s, parent);
         }
-        
-        public Long getParent(Long key){
+
+        public Long getParent(Long key) {
             return parentNode.get(key);
         }
-        
-        public Double getDistance(Long key){
+
+        public Double getDistance(Long key) {
             return distMap.get(key);
         }
-        
-        public boolean contains(Long key){
+
+        public boolean contains(Long key) {
             return distMap.containsKey(key);
         }
     }

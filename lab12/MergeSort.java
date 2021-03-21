@@ -34,8 +34,13 @@ public class MergeSort {
     /** Returns a queue of queues that each contain one item from items. */
     private static <Item extends Comparable> Queue<Queue<Item>>
             makeSingleItemQueues(Queue<Item> items) {
-        // Your code here!
-        return null;
+        Queue<Queue<Item>> result = new Queue<>();
+        for (Item item : items) {
+            Queue<Item> singleQueue = new Queue<>();
+            singleQueue.enqueue(item);
+            result.enqueue(singleQueue);
+        }
+        return result;
     }
 
     /**
@@ -54,13 +59,46 @@ public class MergeSort {
     private static <Item extends Comparable> Queue<Item> mergeSortedQueues(
             Queue<Item> q1, Queue<Item> q2) {
         // Your code here!
-        return null;
+        Queue<Item> result = new Queue<>();
+        while(!q1.isEmpty() && !q2.isEmpty()) {
+            result.enqueue(getMin(q1,q2));
+        }
+        return result;
     }
 
     /** Returns a Queue that contains the given items sorted from least to greatest. */
     public static <Item extends Comparable> Queue<Item> mergeSort(
             Queue<Item> items) {
         // Your code here!
-        return items;
+        Queue<Queue<Item>> singleItemQueues = makeSingleItemQueues(items);
+        if(singleItemQueues.size() == 1){
+            return singleItemQueues.dequeue();
+        }else if(singleItemQueues.size() == 2){
+            return mergeSortedQueues(singleItemQueues.dequeue(),singleItemQueues.dequeue());
+        }else{
+            Queue<Item> leftQueue = new Queue<>();
+            Queue<Item> rightQueue = new Queue<>();
+            int halfSize = items.size() / 2;
+            for (int i = 0; i < halfSize; i++) {
+                leftQueue.enqueue(items.dequeue());
+            }
+            while(!items.isEmpty()){
+                rightQueue.enqueue(items.dequeue());
+            }
+            return mergeSortedQueues(mergeSort(leftQueue),mergeSort(rightQueue));
+        }
+    }
+
+    public static void main(String[] args) {
+        Queue<String> students = new Queue<String>();
+        students.enqueue("33");
+        students.enqueue("46");
+        students.enqueue("1");
+        students.enqueue("67");
+        students.enqueue("67");
+        students.enqueue("88");
+        students.enqueue("20");
+        students = MergeSort.mergeSort(students);
+        System.out.println(students.toString());
     }
 }
